@@ -34,6 +34,8 @@ Notable parts of our repo is as follows:
 
 Beyond referencing various artifacts, the primary runnable notebooks of interest in this repo are in the `figs` folder (for reproducing figures using source data) and in `phia_demo.ipynb` (for trying out PHIA).
 
+Note: you can obtain a Google / Gemini API key from [here](https://aistudio.google.com) with certain rate limits. Similarly, tavily offers a free usage tier and corresponding API key for researchers [here](https://www.tavily.com/#pricing).
+
 ## :scroll: Citation
 If you find our [paper](https://arxiv.org/abs/2406.06464) or this code release useful for your research, please cite our work.
 

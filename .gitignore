@@ -1,0 +1,3 @@
+__pycache__/      # Directory where Python 3 stores .pyc files
+*.py[cod]         # Individual bytecode files (if outside __pycache__/)
+*$py.class        # Jython bytecode files
