@@ -1,11 +1,13 @@
-"""Core ReACT Agent Logic.
+"""Core ReACT Agent Logic with Tavily Search Integration (Simplified).
 """
 
-from typing import Sequence
+from typing import Sequence, Optional
 import pandas as pd
 import numpy as np
 import io
 import contextlib
+import os
+from tavily import TavilyClient
 
 from onetwo import ot
 from onetwo.agents import react
@@ -14,10 +16,55 @@ from onetwo.stdlib.tool_use import python_tool_use
 
 from prompt_templates import build_exemplars, AGENT_PREAMBLE, PHIA_REACT_PROMPT_TEXT
 
-# Mock Search Tool, TODO: Try to use tavily instead
-def mock_search_func(query: str) -> str:
-    print(f"Mock Search Called: {query}")
-    return "Web search is not available in this demo environment."
+# For now, synchronous only tavily search functionality
+def tavily_search_func(query: str, api_key: Optional[str] = None) -> str:
+    """
+    Performs web search using Tavily API.
+    
+    Args:
+        query: The search query string
+        api_key: Tavily API key (if not provided, will look for TAVILY_API_KEY env var)
+    
+    Returns:
+        Formatted search results as a string
+    """
+    try:
+        if api_key is None:
+            api_key = os.getenv('TAVILY_API_KEY')
+            if not api_key:
+                return "Error: Tavily API key not found. Please set the key when creating the agent or set the TAVILY_API_KEY environment variable."
+
+        client = TavilyClient(api_key=api_key)
+        
+        # Perform search with appropriate parameters for health/wellness queries
+        search_results = client.search(
+            query=query,
+            max_results=5,  # Higher value returns more raw search results
+            include_answer=False,  # Corresponds to AI-generated answer summary based on results
+            include_raw_content=False,  # Set to True if you need full page content
+            search_depth="advanced"  # Can be "basic" or "advanced", controls algos used for search
+        )
+
+        formatted_results = []
+        
+        # Add the AI-generated answer if available
+        if search_results.get('answer'):
+            formatted_results.append(f"Summary: {search_results['answer']}\n")
+        
+        # Add individual search results
+        if search_results.get('results'):
+            formatted_results.append("Search Results:")
+            for i, result in enumerate(search_results['results'], 1):
+                formatted_results.append(f"\n{i}. {result.get('title', 'No title')}")
+                formatted_results.append(f"   URL: {result.get('url', 'No URL')}")
+                formatted_results.append(f"   Content: {result.get('content', 'No content available')[:200]}...")
+                if result.get('score'):
+                    formatted_results.append(f"   Relevance Score: {result['score']:.2f}")
+        
+        return "\n".join(formatted_results) if formatted_results else "No search results found."
+        
+    except Exception as e:
+        return f"Error performing search: {str(e)}"
 
 # For code generation, create a simple python executor using exec()
 def simple_python_executor(code: str, globals: dict) -> str:
@@ -44,8 +91,20 @@ def get_react_agent(
     activities_df: pd.DataFrame,
     profile_df: pd.DataFrame,
     example_files: Sequence[str],
+    tavily_api_key: Optional[str] = None,  # Add optional API key parameter
+    use_mock_search: bool = False,  # Option to fall back to mock search
 ):
-    """Initializes and returns an open-source compatible ReAct agent."""
+    """
+    Initializes and returns an open-source compatible ReAct agent.
+    
+    Args:
+        summary_df: Summary dataframe with user activity and sleep data
+        activities_df: Activities dataframe with exercise data
+        profile_df: User profile dataframe
+        example_files: List of example files for few-shot learning
+        tavily_api_key: Optional Tavily API key (if not provided, uses env var)
+        use_mock_search: If True, uses mock search instead of Tavily
+    """
 
     # Define the globals dictionary for our code executor
     sandbox_globals = {
@@ -63,19 +122,34 @@ def get_react_agent(
         description='Python interpreter. Executes code on pandas DataFrames (summary_df, activities_df, profile).',
     )
 
-    # Define other tools
-    search_tool = llm_tool_use.Tool(
-        name="search", function=mock_search_func, description="Mock search engine."
-    )
+    # Search tool - either Tavily or mock based on configuration
+    if use_mock_search:
+        print("Using mock search (set use_mock_search=False to use Tavily)")
+        search_tool = llm_tool_use.Tool(
+            name="search",
+            function=lambda query: "Web search is not available in mock mode.",
+            description="Mock search engine."
+        )
+    else:
+        # Use Tavily search with the provided API key
+        search_tool = llm_tool_use.Tool(
+            name="search",
+            function=lambda query: tavily_search_func(query, api_key=tavily_api_key),
+            description="Web search engine for finding health, wellness, and fitness information. Returns relevant articles and summaries."
+        )
+    
     finish_tool = llm_tool_use.Tool(
-        name="finish", function=lambda x: x, description="Returns the final answer."
+        name="finish", 
+        function=lambda x: x, 
+        description="Returns the final answer."
     )
+    
     agent_tools = [python_tool, search_tool, finish_tool]
 
     # Load exemplars
     examples = build_exemplars(example_files)
 
-    # Create the agent specfiically with PythonToolUseEnvironmentConfig
+    # Create the agent specifically with PythonToolUseEnvironmentConfig
     agent = react.ReActAgent(
         exemplars=examples,
         environment_config=python_tool_use.PythonToolUseEnvironmentConfig(

@@ -13,5 +13,6 @@ absl-py
 jinja2
 pyyaml
 nbformat
+tavily-python
 ipywidgets
 ipykernel
