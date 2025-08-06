@@ -1,4 +1,4 @@
-# PHIA - Transforming Wearable Data into Health Insights using Large Language Model Agents
+# PHIA: Transforming Wearable Data into Health Insights using Large Language Model Agents
 
 The official repository for paper "Transforming Wearable Data into Health Insights using Large Language Model Agents" and the corresponding Personal Health Insights Agent (PHIA).
 
