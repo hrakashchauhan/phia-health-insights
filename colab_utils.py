@@ -7,15 +7,16 @@ agent outputs in notebooks.
 import html
 from onetwo.agents import react
 from onetwo.stdlib.tool_use import llm_tool_use
+from typing import get_origin
 
 def format_react_state_html(state: react.ReActState) -> str:
     """Formats the onetwo.agents.react.ReActState into HTML."""
-    if not isinstance(state, react.ReActState):
-            return "<p>Invalid state type for formatting.</p>"
+    if not isinstance(state, get_origin(react.ReActState) or react.ReActState):
+        return "<p>Invalid state type for formatting.</p>"
 
     inputs = state.inputs
-    # The question is expected to be under the key 'question'
-    question = inputs.get('question', inputs) # Fallback to inputs if 'question' key is not found
+    question = inputs
+    
     html_output = f'<p><span style="font-weight: bold; color: #DAA520;">[Question]:</span> {html.escape(str(question))}</p>'
     html_output += "<b>--- Reasoning ---</b>"
 
@@ -32,8 +33,7 @@ def format_react_state_html(state: react.ReActState) -> str:
 
                 action_args = action.args
                 if action_args:
-                    if function_name == "code_tool":
-                        # Assuming the code block is the first argument
+                    if function_name == "tool_code":
                         code_content = html.escape(str(action_args[0]))
                         code_style = "display: block; background-color: #F8F8F8; color: #000000; font-family: 'Courier New', Courier, monospace; border: 1px solid #E0E0E0; border-radius: 5px; padding: 10px; margin: 5px 0; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"
                         html_output += f'<div style="{code_style}">{code_content}</div>'
@@ -44,14 +44,16 @@ def format_react_state_html(state: react.ReActState) -> str:
                     kwargs_str = ', '.join(f"{k}={html.escape(str(v))}" for k, v in action.kwargs.items())
                     html_output += f"Kwargs: {{{kwargs_str}}}<br>"
             else:
-                # Fallback if action is not FunctionCall
                 html_output += f'<span style="font-weight: bold; color: #FF4500;">[Act]:</span> {html.escape(str(action))}<br>'
 
         observation = step.observation or ""
-        # Escape observation content, handle potential HTML in observation
         obs_html = html.escape(str(observation))
-        html_output += f'<span style="font-weight: bold; color: #2E8B57;">[Observe]:</span><div style="background-color: #F0F0F0; padding: 5px; border-radius: 3px; margin-top: 5px;">{obs_html}</div>'
+
+        obs_box_style = "border: 1px solid #888; border-radius: 5px; padding: 10px; margin-top: 5px;"
+        
+        html_output += f'<span style="font-weight: bold; color: #2E8B57;">[Observe]:</span><div style="{obs_box_style}">{obs_html}</div>'
 
         if step.is_finished:
             break
+            
     return html_output

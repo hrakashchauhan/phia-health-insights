@@ -14,11 +14,9 @@ import os
 from onetwo.agents import react
 from onetwo.stdlib.tool_use import llm_tool_use
 
-# Name of the tool used for executing python code.
 _PYTHON_TOOL_NAME = "tool_code"
 _SEARCH_TOOL_NAME = "search"
 _FINISH_TOOL_NAME = "finish"
-
 
 def build_exemplars(example_files: Sequence[str]) -> list[react.ReActState]:
     """Construct ReAct exemplars from the given example files.
@@ -38,7 +36,6 @@ def build_exemplars(example_files: Sequence[str]) -> list[react.ReActState]:
             print(f"Error: File not found: {example_file}")
             continue
         try:
-            # Use standard open to read the file
             with open(example_file, 'r', encoding='utf-8') as f:
                 raw_nb = f.read()
         except Exception as e:
@@ -185,7 +182,7 @@ def build_exemplars(example_files: Sequence[str]) -> list[react.ReActState]:
         )
     return exemplars
 
-GENT_PREAMBLE = textwrap.dedent("""\
+AGENT_PREAMBLE = textwrap.dedent("""\
 {#- Preamble: Agent functionality description -#}
 I am going to ask you a question about Fitbit data. Assume that you have access
 to pandas through `pd` and numpy through `np`. You DO NOT have access to matplotlib or other python libraries.
