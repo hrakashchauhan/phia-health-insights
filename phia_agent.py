@@ -74,15 +74,52 @@ def simple_python_executor(code: str, globals: dict) -> str:
     string_buffer = io.StringIO()
     try:
         with contextlib.redirect_stdout(string_buffer):
-            # Execute the code with the provided globals (your dataframes)
-            exec(code, globals, local_scope)
-        output = string_buffer.getvalue()
-        # If the last line of code was an expression, its value is in the buffer
-        # This is a simple way to get the return value
-        if not output and local_scope:
-             # Get the last computed value if nothing was printed
-             output = str(list(local_scope.values())[-1])
-        return output or "Code executed successfully."
+            # Split code into lines to handle the last expression separately
+            code_lines = code.strip().split('\n')
+            
+            # Check if the last line is likely an expression (not an assignment or statement)
+            last_line = code_lines[-1].strip() if code_lines else ""
+            
+            # Determine if last line is an expression that should be evaluated
+            is_expression = (
+                last_line and 
+                not last_line.startswith(('import ', 'from ', 'def ', 'class ', 'if ', 'for ', 'while ', 'with ', 'try:', 'except', 'finally', 'elif ', 'else:')) and
+                '=' not in last_line.split('#')[0] and  # No assignment (ignoring comments)
+                not last_line.startswith('#')  # Not a comment
+            )
+            
+            if is_expression and len(code_lines) > 1:
+                # Execute all but the last line
+                exec('\n'.join(code_lines[:-1]), globals, local_scope)
+                # Evaluate the last line and capture its value
+                result = eval(last_line, {**globals, **local_scope}, local_scope)
+                
+                # Get any printed output
+                printed_output = string_buffer.getvalue()
+                
+                # If there was printed output, use it; otherwise use the result
+                if printed_output:
+                    output = printed_output
+                else:
+                    output = str(result)
+            else:
+                # Execute the entire code block
+                exec(code, globals, local_scope)
+                printed_output = string_buffer.getvalue()
+                
+                # Check if the last line stored a value in local_scope
+                if not printed_output and is_expression:
+                    # Try to evaluate the last line as an expression
+                    try:
+                        result = eval(last_line, {**globals, **local_scope}, local_scope)
+                        output = str(result)
+                    except:
+                        output = printed_output or "Code executed successfully."
+                else:
+                    output = printed_output or "Code executed successfully."
+        
+        return output
+        
     except Exception as e:
         return f"Error executing code: {e}"
 

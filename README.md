@@ -32,7 +32,7 @@ Notable parts of our repo is as follows:
 - `prompt_templats.py` contains key prompt templates (e.g., agent preamble) utilized by PHIA.
 - `phia_demo.ipynb` contains code to try out PHIA. API keys must be provided as noted in the notebook.
 
-Beyond referencing various artifacts, the primary runnable notebooks of interest in this repo are in the `figs` folder (for reproducing figures using source data) and in `phia_demo.ipynb` (for trying out PHIA). When trying out PHIA, take note of particular notebook cells and their purpose. For example, when loading data (e.g., the summary or exercise dataframe), not all synthetic wearable user data is equal - some dataframes may have more information that others (e.g., sleep information being available in one summary dataframe and unavailable in another).
+Beyond referencing various artifacts, the primary runnable notebooks of interest in this repo are in the `figs` folder (for reproducing figures using source data) and in `phia_demo.ipynb` (for trying out PHIA). When trying out PHIA, take note of particular notebook cells and their purpose, especially what data (e.g., synthetic user summary dataframe, exercise dataframe) is being loaded and whether or not you want to change what data is being loaded.
 
 Note: you can obtain a Google / Gemini API key from [here](https://aistudio.google.com) with certain rate limits. Similarly, tavily offers a free usage tier and corresponding API key for researchers [here](https://www.tavily.com/#pricing).
 
