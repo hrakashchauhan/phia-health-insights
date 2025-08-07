@@ -14,7 +14,7 @@ The official repository for the paper "Transforming Wearable Data into Personal 
 </p>
 
 <p align="center">
-  <img src="teaser.gif" alt="PHIA Demo" width="600">
+  <img src="teaser.gif" alt="PHIA Demo" width="400">
 </p>
 
 ## :wrench: Setup
