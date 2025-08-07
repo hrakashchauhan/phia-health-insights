@@ -47,3 +47,8 @@ If you find our [paper](https://arxiv.org/abs/2406.06464) or this code release u
   year={2024}
 }
 ```
+
+## License
+```
+Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+```
