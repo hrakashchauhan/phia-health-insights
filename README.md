@@ -1,7 +1,5 @@
 # Transforming Wearable Data into Personal Health Insights using Large Language Model Agents (PHIA)
 
-The official repository for the paper "Transforming Wearable Data into Personal Health Insights using Large Language Model Agents" and its corresponding Personal Health Insights Agent (PHIA).
-
 <p align="center">
 :fire: Please remember to :star: this repo if you find it useful and <a href="https://github.com/yahskapar/PHIA#scroll-citation">cite</a> our work if you end up using it in your work! :fire:
 </p>
@@ -16,6 +14,8 @@ The official repository for the paper "Transforming Wearable Data into Personal 
 <p align="center">
   <img src="teaser.gif" alt="PHIA Demo" width="400">
 </p>
+
+The official repository for the paper "Transforming Wearable Data into Personal Health Insights using Large Language Model Agents" and its corresponding Personal Health Insights Agent (PHIA).
 
 ## :wrench: Setup
 
