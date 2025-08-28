@@ -28,8 +28,8 @@ Once setup is complete, you can activate the environment using `conda activate p
 Notable parts of our repo are as follows:
 - `figs` contains all code necessary to reproduce figures from the paper.
 - `data` contains model outputs and human annotations.
-- `Objective Query - PHIA.xlsx` contains 4000 objective queries.
-- `Open-Ended Query - PHIA.xlsx` contains 172 open-ended queries.
+- `Objective Query - PHIA.xlsx` contains 4000 objective queries. For example: "What was the distance of my longest run in the past 21 days?"
+- `Open-Ended Query - PHIA.xlsx` contains 172 open-ended queries. For example: "How do I reduce stress?"
 - `synthetic_wearable_users` contains a set of synthetic wearable users. Subject 465, 333, 171, and 41 are used in evaluation.
 - `few_shots` contains all of our few-shot examples that are utilized by PHIA.
 - `phia_agent.py` contains the core agent logic for PHIA.
