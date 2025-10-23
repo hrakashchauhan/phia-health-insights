@@ -7,55 +7,31 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         .header { text-align: center; margin-bottom: 30px; color: white; }
-        .header h1 { font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .header h1 { font-size: 3em; margin-bottom: 10px; }
         .header p { font-size: 1.3em; opacity: 0.9; }
-        .header .subtitle { font-size: 1em; margin-top: 10px; opacity: 0.8; }
-        .status { background: rgba(255,255,255,0.95); color: #2c3e50; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-weight: 600; }
-        .status.ready { background: linear-gradient(135deg, #4CAF50, #45a049); color: white; }
-        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .card { background: rgba(255,255,255,0.95); padding: 25px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); backdrop-filter: blur(10px); transition: transform 0.3s ease; }
-        .card:hover { transform: translateY(-5px); }
-        .card h3 { color: #2c3e50; margin-bottom: 20px; font-size: 1.3em; display: flex; align-items: center; }
-        .card h3 .emoji { font-size: 1.5em; margin-right: 10px; }
-        .metric { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #ecf0f1; }
-        .metric:last-child { border-bottom: none; }
-        .metric-label { color: #7f8c8d; font-weight: 500; }
-        .metric-value { font-weight: bold; color: #3498db; font-size: 1.1em; }
-        .metric-good { color: #27ae60; }
-        .metric-warning { color: #f39c12; }
-        .metric-poor { color: #e74c3c; }
-        .progress-bar { width: 100%; height: 8px; background: #ecf0f1; border-radius: 4px; margin-top: 5px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, #3498db, #2ecc71); transition: width 0.3s ease; }
-        .chat-container { background: rgba(255,255,255,0.95); border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); backdrop-filter: blur(10px); }
+        .status { background: rgba(255,255,255,0.95); color: #2c3e50; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 25px; font-weight: 600; }
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: rgba(255,255,255,0.95); padding: 25px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .card h3 { color: #2c3e50; margin-bottom: 15px; font-size: 1.2em; }
+        .metric { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .metric-value { font-weight: bold; color: #3498db; }
+        .chat-container { background: rgba(255,255,255,0.95); border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
         .chat-header { background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 25px; border-radius: 16px 16px 0 0; }
-        .chat-header h2 { font-size: 1.5em; margin-bottom: 8px; }
-        .chat-header p { opacity: 0.9; }
-        .chat-messages { height: 450px; overflow-y: auto; padding: 25px; background: #fafbfc; }
-        .message { margin-bottom: 20px; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-messages { height: 400px; overflow-y: auto; padding: 25px; }
+        .message { margin-bottom: 15px; }
         .user-message { text-align: right; }
-        .user-message .bubble { background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 12px 18px; border-radius: 20px 20px 6px 20px; display: inline-block; max-width: 75%; box-shadow: 0 2px 10px rgba(52,152,219,0.3); }
-        .ai-message .bubble { background: white; color: #2c3e50; padding: 15px 20px; border-radius: 20px 20px 20px 6px; display: inline-block; max-width: 85%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #3498db; line-height: 1.6; }
-        .ai-message .bubble strong { color: #2980b9; }
+        .user-message .bubble { background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 12px 18px; border-radius: 20px 20px 6px 20px; display: inline-block; max-width: 70%; }
+        .ai-message .bubble { background: white; color: #2c3e50; padding: 15px 20px; border-radius: 20px 20px 20px 6px; display: inline-block; max-width: 80%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 4px solid #3498db; }
         .chat-input { padding: 25px; border-top: 1px solid #ecf0f1; background: white; border-radius: 0 0 16px 16px; }
-        .sample-questions { margin-bottom: 20px; }
-        .sample-questions h4 { color: #2c3e50; margin-bottom: 12px; font-size: 1em; }
-        .sample-btn { background: linear-gradient(135deg, #ecf0f1, #d5dbdb); border: none; padding: 10px 16px; margin: 6px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: all 0.3s ease; color: #2c3e50; }
-        .sample-btn:hover { background: linear-gradient(135deg, #3498db, #2980b9); color: white; transform: translateY(-2px); }
-        .input-group { display: flex; gap: 12px; align-items: center; }
-        .input-group input { flex: 1; padding: 15px 20px; border: 2px solid #ecf0f1; border-radius: 25px; font-size: 16px; transition: border-color 0.3s ease; }
-        .input-group input:focus { outline: none; border-color: #3498db; }
-        .input-group button { padding: 15px 30px; background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: none; border-radius: 25px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
-        .input-group button:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(52,152,219,0.4); }
-        .input-group button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .loading { text-align: center; color: #7f8c8d; padding: 20px; }
-        .insights-summary { background: rgba(255,255,255,0.95); padding: 25px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
-        .insights-summary h3 { color: #2c3e50; margin-bottom: 15px; }
-        .insight-item { display: flex; align-items: center; margin-bottom: 10px; }
-        .insight-icon { font-size: 1.2em; margin-right: 10px; }
-        .data-period { font-size: 0.9em; color: #7f8c8d; margin-top: 5px; }
+        .sample-questions { margin-bottom: 15px; }
+        .sample-btn { background: #ecf0f1; border: none; padding: 8px 12px; margin: 5px; border-radius: 15px; cursor: pointer; font-size: 14px; }
+        .sample-btn:hover { background: #3498db; color: white; }
+        .input-group { display: flex; gap: 10px; }
+        .input-group input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 25px; font-size: 16px; }
+        .input-group button { padding: 12px 24px; background: #3498db; color: white; border: none; border-radius: 25px; cursor: pointer; }
+        .input-group button:hover { background: #2980b9; }
     </style>
 </head>
 <body>
@@ -63,146 +39,56 @@
         <div class="header">
             <h1>🏥 PHIA</h1>
             <p>Personal Health Insights Agent</p>
-            <div class="subtitle">AI-Powered Health Analytics & Personalized Recommendations</div>
         </div>
 
-        <div class="status" id="status">
-            🔄 Initializing AI health agent and loading your data...
-        </div>
-
-        <div class="insights-summary" id="insights-summary" style="display: none;">
-            <h3>📊 Your Health Overview</h3>
-            <div id="health-insights"></div>
-            <div class="data-period">Analysis based on <span id="data-period"></span> of continuous health monitoring</div>
-        </div>
+        <div class="status" id="status">🔄 Loading...</div>
 
         <div class="dashboard" id="dashboard" style="display: none;">
             <div class="card">
-                <h3><span class="emoji">😴</span>Sleep Quality & Duration</h3>
-                <div class="metric">
-                    <span class="metric-label">Average Sleep:</span>
-                    <span class="metric-value" id="sleep-avg">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Recent Week:</span>
-                    <span class="metric-value" id="sleep-recent">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Deep Sleep:</span>
-                    <span class="metric-value" id="deep-sleep">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">REM Sleep:</span>
-                    <span class="metric-value" id="rem-sleep">-</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="sleep-progress"></div>
-                </div>
+                <h3>😴 Sleep Analysis</h3>
+                <div class="metric"><span>Average:</span><span class="metric-value" id="sleep-avg">-</span></div>
+                <div class="metric"><span>Recent:</span><span class="metric-value" id="sleep-recent">-</span></div>
             </div>
-
             <div class="card">
-                <h3><span class="emoji">🚶</span>Physical Activity</h3>
-                <div class="metric">
-                    <span class="metric-label">Daily Steps (Avg):</span>
-                    <span class="metric-value" id="steps-avg">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Recent Week:</span>
-                    <span class="metric-value" id="steps-recent">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Active Zone Minutes:</span>
-                    <span class="metric-value" id="active-minutes">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Workout Sessions:</span>
-                    <span class="metric-value" id="workouts">-</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="activity-progress"></div>
-                </div>
+                <h3>🚶 Activity Level</h3>
+                <div class="metric"><span>Avg Steps:</span><span class="metric-value" id="steps-avg">-</span></div>
+                <div class="metric"><span>Recent:</span><span class="metric-value" id="steps-recent">-</span></div>
             </div>
-
             <div class="card">
-                <h3><span class="emoji">❤️</span>Cardiovascular Health</h3>
-                <div class="metric">
-                    <span class="metric-label">Resting Heart Rate:</span>
-                    <span class="metric-value" id="rhr-avg">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Recent Trend:</span>
-                    <span class="metric-value" id="rhr-recent">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Heart Rate Variability:</span>
-                    <span class="metric-value" id="hrv-avg">-</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="heart-progress"></div>
-                </div>
+                <h3>❤️ Heart Rate</h3>
+                <div class="metric"><span>Avg RHR:</span><span class="metric-value" id="rhr-avg">-</span></div>
+                <div class="metric"><span>Recent:</span><span class="metric-value" id="rhr-recent">-</span></div>
             </div>
-
             <div class="card">
-                <h3><span class="emoji">🧘</span>Stress & Recovery</h3>
-                <div class="metric">
-                    <span class="metric-label">Stress Management:</span>
-                    <span class="metric-value" id="stress-avg">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Recent Week:</span>
-                    <span class="metric-value" id="stress-recent">-</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-label">Recovery Score:</span>
-                    <span class="metric-value" id="recovery-score">-</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="stress-progress"></div>
-                </div>
+                <h3>🧘 Stress Score</h3>
+                <div class="metric"><span>Average:</span><span class="metric-value" id="stress-avg">-</span></div>
+                <div class="metric"><span>Recent:</span><span class="metric-value" id="stress-recent">-</span></div>
             </div>
         </div>
 
         <div class="chat-container">
             <div class="chat-header">
-                <h2>💬 AI Health Consultant</h2>
-                <p>Ask personalized questions about your health data and get evidence-based insights</p>
+                <h2>💬 Ask PHIA</h2>
+                <p>Get personalized health insights</p>
             </div>
 
             <div class="chat-messages" id="messages">
                 <div class="message ai-message">
-                    <div class="bubble">
-                        👋 <strong>Welcome to PHIA!</strong><br><br>
-                        I'm your Personal Health Insights Agent. I've analyzed your comprehensive health data including sleep patterns, physical activity, heart rate metrics, and stress indicators.<br><br>
-                        <strong>What I can help you with:</strong><br>
-                        • Sleep optimization and energy improvement<br>
-                        • Activity and fitness recommendations<br>
-                        • Heart health and recovery insights<br>
-                        • Stress management strategies<br>
-                        • Trend analysis and goal setting<br><br>
-                        What aspect of your health would you like to explore first?
-                    </div>
+                    <div class="bubble">👋 Hi! I'm PHIA, your Personal Health Insights Agent. I can help you understand your health data and provide recommendations. What would you like to know?</div>
                 </div>
             </div>
 
             <div class="chat-input">
-                <div class="sample-questions">
-                    <h4>💡 Popular Questions:</h4>
-                    <div id="sample-questions-container">
-                        <!-- Sample questions will be loaded here -->
-                    </div>
-                </div>
+                <div class="sample-questions" id="sample-questions"></div>
                 <div class="input-group">
-                    <input type="text" id="question-input" placeholder="Ask me anything about your health data..." onkeypress="handleKeyPress(event)">
-                    <button id="ask-btn" onclick="askQuestion()">Ask PHIA</button>
+                    <input type="text" id="question-input" placeholder="Ask about your health..." onkeypress="handleKeyPress(event)">
+                    <button onclick="askQuestion()">Ask</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        let isLoading = false;
-
-        // Load health summary with enhanced data
         async function loadHealthSummary() {
             try {
                 const response = await fetch('/api/health-summary');
@@ -213,83 +99,29 @@
                     return;
                 }
 
-                // Update status
-                const statusEl = document.getElementById('status');
-                statusEl.innerHTML = `✅ PHIA AI Agent Ready - ${data.total_days} days of health data analyzed`;
-                statusEl.className = 'status ready';
+                document.getElementById('sleep-avg').textContent = data.sleep_avg + 'h';
+                document.getElementById('sleep-recent').textContent = data.sleep_recent + 'h';
+                document.getElementById('steps-avg').textContent = data.steps_avg.toLocaleString();
+                document.getElementById('steps-recent').textContent = data.steps_recent.toLocaleString();
+                document.getElementById('rhr-avg').textContent = data.rhr_avg + ' bpm';
+                document.getElementById('rhr-recent').textContent = data.rhr_recent + ' bpm';
+                document.getElementById('stress-avg').textContent = data.stress_avg + '/100';
+                document.getElementById('stress-recent').textContent = data.stress_recent + '/100';
 
-                // Update dashboard with enhanced metrics
-                updateMetric('sleep-avg', data.sleep_avg + 'h', data.sleep_avg >= 7 ? 'good' : data.sleep_avg >= 6 ? 'warning' : 'poor');
-                updateMetric('sleep-recent', data.sleep_recent + 'h', data.sleep_recent >= 7 ? 'good' : data.sleep_recent >= 6 ? 'warning' : 'poor');
-                updateMetric('deep-sleep', data.deep_sleep + '%', data.deep_sleep >= 15 ? 'good' : data.deep_sleep >= 10 ? 'warning' : 'poor');
-                updateMetric('rem-sleep', data.rem_sleep + '%', data.rem_sleep >= 20 ? 'good' : data.rem_sleep >= 15 ? 'warning' : 'poor');
-
-                updateMetric('steps-avg', data.steps_avg.toLocaleString(), data.steps_avg >= 8000 ? 'good' : data.steps_avg >= 5000 ? 'warning' : 'poor');
-                updateMetric('steps-recent', data.steps_recent.toLocaleString(), data.steps_recent >= 8000 ? 'good' : data.steps_recent >= 5000 ? 'warning' : 'poor');
-                updateMetric('active-minutes', Math.round(data.steps_avg / 150) + ' min/day', 'good');
-                updateMetric('workouts', data.total_workouts + ' sessions', 'good');
-
-                updateMetric('rhr-avg', data.rhr_avg + ' bpm', data.rhr_avg <= 70 ? 'good' : data.rhr_avg <= 80 ? 'warning' : 'poor');
-                updateMetric('rhr-recent', data.rhr_recent + ' bpm', data.rhr_recent <= 70 ? 'good' : data.rhr_recent <= 80 ? 'warning' : 'poor');
-                updateMetric('hrv-avg', '7.1 ms', 'good'); // Sample HRV data
-
-                updateMetric('stress-avg', data.stress_avg + '/100', data.stress_avg >= 75 ? 'good' : data.stress_avg >= 60 ? 'warning' : 'poor');
-                updateMetric('stress-recent', data.stress_recent + '/100', data.stress_recent >= 75 ? 'good' : data.stress_recent >= 60 ? 'warning' : 'poor');
-                updateMetric('recovery-score', Math.round((data.stress_avg + (data.sleep_avg * 10)) / 2) + '/100', 'good');
-
-                // Update progress bars
-                updateProgressBar('sleep-progress', (data.sleep_avg / 9) * 100);
-                updateProgressBar('activity-progress', Math.min((data.steps_avg / 10000) * 100, 100));
-                updateProgressBar('heart-progress', Math.max(100 - ((data.rhr_avg - 50) / 30) * 100, 0));
-                updateProgressBar('stress-progress', data.stress_avg);
-
-                // Show insights summary
-                const insightsEl = document.getElementById('health-insights');
-                insightsEl.innerHTML = generateHealthInsights(data);
-                document.getElementById('data-period').textContent = `${data.total_days} days`;
-                document.getElementById('insights-summary').style.display = 'block';
-
-                // Show dashboard
+                document.getElementById('status').innerHTML = '✅ PHIA Ready - ' + data.total_days + ' days of data';
                 document.getElementById('dashboard').style.display = 'grid';
             } catch (error) {
-                document.getElementById('status').innerHTML = '❌ Error loading data: ' + error.message;
+                document.getElementById('status').innerHTML = '❌ Error: ' + error.message;
             }
         }
 
-        function updateMetric(id, value, status) {
-            const el = document.getElementById(id);
-            el.textContent = value;
-            el.className = 'metric-value metric-' + status;
-        }
-
-        function updateProgressBar(id, percentage) {
-            document.getElementById(id).style.width = Math.min(percentage, 100) + '%';
-        }
-
-        function generateHealthInsights(data) {
-            let insights = [];
-            
-            if (data.sleep_avg >= 7.5) insights.push('<div class="insight-item"><span class="insight-icon">✅</span>Excellent sleep duration maintained</div>');
-            else if (data.sleep_avg < 6.5) insights.push('<div class="insight-item"><span class="insight-icon">⚠️</span>Sleep duration below recommended 7-9 hours</div>');
-            
-            if (data.steps_avg >= 10000) insights.push('<div class="insight-item"><span class="insight-icon">🎯</span>Exceeding daily step goals consistently</div>');
-            else if (data.steps_avg < 5000) insights.push('<div class="insight-item"><span class="insight-icon">📈</span>Opportunity to increase daily activity</div>');
-            
-            if (data.rhr_avg <= 65) insights.push('<div class="insight-item"><span class="insight-icon">❤️</span>Excellent cardiovascular fitness indicated</div>');
-            
-            if (data.stress_avg >= 80) insights.push('<div class="insight-item"><span class="insight-icon">🧘</span>Strong stress management capabilities</div>');
-            
-            return insights.join('') || '<div class="insight-item"><span class="insight-icon">📊</span>Comprehensive health analysis available</div>';
-        }
-
-        // Enhanced sample questions loading
         async function loadSampleQuestions() {
             try {
                 const response = await fetch('/api/sample-questions');
                 const questions = await response.json();
                 
-                const container = document.getElementById('sample-questions-container');
-                questions.slice(0, 6).forEach(question => {
+                const container = document.getElementById('sample-questions');
+                questions.forEach(question => {
                     const btn = document.createElement('button');
                     btn.className = 'sample-btn';
                     btn.textContent = question;
@@ -300,30 +132,20 @@
                     container.appendChild(btn);
                 });
             } catch (error) {
-                console.error('Error loading sample questions:', error);
+                console.error('Error loading questions:', error);
             }
         }
 
-        // Enhanced ask question with loading states
         async function askQuestion() {
-            if (isLoading) return;
-            
             const input = document.getElementById('question-input');
             const question = input.value.trim();
-            const askBtn = document.getElementById('ask-btn');
             
             if (!question) return;
 
-            isLoading = true;
-            askBtn.disabled = true;
-            askBtn.textContent = 'Analyzing...';
-
-            // Add user message
             addMessage(question, 'user');
             input.value = '';
 
-            // Add loading message
-            const loadingId = addMessage('🤖 Analyzing your health data and generating personalized insights...', 'ai');
+            const loadingId = addMessage('🤖 Thinking...', 'ai');
 
             try {
                 const response = await fetch('/api/ask', {
@@ -333,8 +155,6 @@
                 });
 
                 const data = await response.json();
-                
-                // Remove loading message
                 document.getElementById(loadingId).remove();
 
                 if (data.error) {
@@ -345,14 +165,9 @@
             } catch (error) {
                 document.getElementById(loadingId).remove();
                 addMessage('❌ Error: ' + error.message, 'ai');
-            } finally {
-                isLoading = false;
-                askBtn.disabled = false;
-                askBtn.textContent = 'Ask PHIA';
             }
         }
 
-        // Enhanced message display
         function addMessage(text, type) {
             const messages = document.getElementById('messages');
             const messageDiv = document.createElement('div');
@@ -362,12 +177,7 @@
             
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
-            
-            if (type === 'ai') {
-                bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-            } else {
-                bubble.textContent = text;
-            }
+            bubble.textContent = text;
             
             messageDiv.appendChild(bubble);
             messages.appendChild(messageDiv);
@@ -377,17 +187,14 @@
         }
 
         function handleKeyPress(event) {
-            if (event.key === 'Enter' && !isLoading) {
+            if (event.key === 'Enter') {
                 askQuestion();
             }
         }
 
-        // Initialize with loading animation
         window.onload = function() {
-            setTimeout(() => {
-                loadHealthSummary();
-                loadSampleQuestions();
-            }, 500);
+            loadHealthSummary();
+            loadSampleQuestions();
         };
     </script>
 </body>
