@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: phia-health-insights
+    env: python
+    buildCommand: "pip install -r requirements-web.txt"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false

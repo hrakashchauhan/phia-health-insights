@@ -1,58 +1,179 @@
-# Transforming Wearable Data into Personal Health Insights using Large Language Model Agents (PHIA)
+# 🏥 PHIA - Personal Health Insights Agent
 
-<p align="center">
-:fire: Please remember to :star: this repo if you find it useful and <a href="https://github.com/yahskapar/PHIA#scroll-citation">cite</a> our work if you end up using it in your work! :fire:
-</p>
-<p align="center">
-:fire: If you have any questions or concerns, please create an issue :memo:! :fire:
-</p>
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Available-brightgreen)](https://your-app-url.onrender.com)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue)](https://python.org)
+[![Flask](https://img.shields.io/badge/Flask-3.1+-red)](https://flask.palletsprojects.com)
+[![AI](https://img.shields.io/badge/AI-Google%20Gemini-orange)](https://ai.google.dev)
 
-<p align="center">
-<a href="https://research.google/blog/advancing-personal-health-and-wellness-insights-with-ai/">Blog Post</a> | <a href="https://arxiv.org/abs/2406.06464">Pre-print</a>
-</p>
+**PHIA** is an AI-powered Personal Health Insights Agent that analyzes wearable device data to provide personalized health recommendations and insights.
 
-<p align="center">
-  <img src="teaser.gif" alt="PHIA Demo" width="400">
-</p>
+## 🌟 Features
 
-The official repository for the paper "Transforming Wearable Data into Personal Health Insights using Large Language Model Agents" and its corresponding Personal Health Insights Agent (PHIA).
+- **AI-Powered Analysis**: Uses Google's Gemini AI for intelligent health insights
+- **Comprehensive Health Metrics**: Sleep, activity, heart rate, and stress analysis
+- **Interactive Web Interface**: Beautiful, responsive design for all devices
+- **Real-time Chat**: Ask questions about your health data in natural language
+- **Personalized Recommendations**: Evidence-based suggestions for health improvement
+- **Data Visualization**: Clear charts and progress tracking
 
-## :wrench: Setup
+## 🚀 Live Demo
 
-Python 3.11 and higher, and conda, are required. Run `bash setup.sh` to fully setup the phia conda environment. The entire setup process should be automatic from end-to-end, though has been tested on a limited number of machines. Please report any issues as you encounter them.
+Try PHIA live: **[https://your-app-url.onrender.com](https://your-app-url.onrender.com)**
 
-Once setup is complete, you can activate the environment using `conda activate phia` in your terminal for subsequent usage via the terminal. Most typical usage will involve invoking the conda environment, either via terminal or VSCode, as a kernel to utilize for various notebooks in the repo. If you open a notebook in VSCode, you should be able to select the phia environment as the kernel in the top-right corner.
+## 📊 What PHIA Analyzes
 
-## :computer: Usage
+### Sleep Quality
+- Sleep duration and consistency
+- Deep sleep and REM percentages
+- Sleep efficiency metrics
+- Bedtime pattern analysis
 
-Notable parts of our repo are as follows:
-- `figs` contains all code necessary to reproduce figures from the paper.
-- `data` contains model outputs and human annotations.
-- `Objective Query - PHIA.xlsx` contains 4000 objective queries. For example: "What was the distance of my longest run in the past 21 days?"
-- `Open-Ended Query - PHIA.xlsx` contains 172 open-ended queries. For example: "How do I reduce stress?"
-- `synthetic_wearable_users` contains a set of synthetic wearable users. Subject 465, 333, 171, and 41 are used in evaluation.
-- `few_shots` contains all of our few-shot examples that are utilized by PHIA.
-- `phia_agent.py` contains the core agent logic for PHIA.
-- `prompt_templates.py` contains key prompt templates (e.g., agent preamble) utilized by PHIA.
-- `phia_demo.ipynb` contains code to try out PHIA. API keys must be provided as noted in the notebook.
+### Physical Activity
+- Daily step counts and trends
+- Active zone minutes
+- Workout frequency and intensity
+- Activity pattern recognition
 
-Beyond referencing various artifacts, the primary runnable notebooks of interest in this repo are in the `figs` folder (for reproducing figures using source data) and in `phia_demo.ipynb` (for trying out PHIA). When trying out PHIA, take note of particular notebook cells and their purpose, especially what data (e.g., synthetic user summary dataframe, exercise dataframe) is being loaded and whether or not you want to change what data is being loaded.
+### Cardiovascular Health
+- Resting heart rate trends
+- Heart rate variability
+- Recovery metrics
+- Cardiovascular fitness indicators
 
-Note: you can obtain a Google / Gemini API key from [here](https://aistudio.google.com) with certain rate limits. Similarly, tavily offers a free usage tier and corresponding API key for researchers [here](https://www.tavily.com/#pricing).
+### Stress & Recovery
+- Stress management scores
+- Recovery recommendations
+- Lifestyle impact analysis
+- Wellness optimization
 
-## :scroll: Citation
-If you find our [paper](https://arxiv.org/abs/2406.06464) or this code release useful for your research, please cite our work.
+## 🛠️ Installation
+
+### Quick Start (Local Development)
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/hrakashchauhan/phia-health-insights.git
+   cd phia-health-insights
+   ```
+
+2. **Set up environment**
+   ```bash
+   conda create -n phia python=3.11 -y
+   conda activate phia
+   pip install -r requirements-web.txt
+   ```
+
+3. **Configure API keys**
+   ```bash
+   cp .env.example .env
+   # Edit .env and add your API keys
+   ```
+
+4. **Run the application**
+   ```bash
+   python app.py
+   ```
+
+5. **Open in browser**
+   ```
+   http://localhost:5000
+   ```
+
+### API Keys Required
+
+- **Google/Gemini API Key**: Get from [Google AI Studio](https://aistudio.google.com)
+- **Tavily API Key** (optional): Get from [Tavily](https://www.tavily.com/#pricing)
+
+## 🌐 Deployment
+
+### Deploy to Render (Recommended)
+
+1. Fork this repository
+2. Connect to [Render](https://render.com)
+3. Create a new Web Service
+4. Set environment variables:
+   - `GOOGLE_API_KEY`: Your Google/Gemini API key
+   - `TAVILY_API_KEY`: Your Tavily API key (optional)
+5. Deploy!
+
+### Deploy to Heroku
+
+```bash
+heroku create your-app-name
+heroku config:set GOOGLE_API_KEY=your_key_here
+heroku config:set TAVILY_API_KEY=your_key_here
+git push heroku main
+```
+
+## 💬 Example Questions
+
+Ask PHIA anything about your health data:
+
+- "How can I feel more awake and energetic during the day?"
+- "What's affecting my sleep quality?"
+- "How can I improve my running performance?"
+- "What patterns do you see in my health data?"
+- "How does my exercise routine impact my recovery?"
+- "What's the best time for me to work out?"
+
+## 🏗️ Architecture
 
 ```
-@article{merrill2024transforming,
-  title={Transforming wearable data into health insights using large language model agents},
-  author={Merrill, Mike A and Paruchuri, Akshay and Rezaei, Naghmeh and Kovacs, Geza and Perez, Javier and Liu, Yun and Schenck, Erik and Hammerquist, Nova and Sunshine, Jake and Tailor, Shyam and others},
-  journal={arXiv preprint arXiv:2406.06464},
-  year={2024}
-}
+PHIA/
+├── app.py                 # Flask web application
+├── config.py             # Configuration management
+├── data_utils.py         # Data processing utilities
+├── phia_agent.py         # AI agent core logic
+├── prompt_templates.py   # AI prompt templates
+├── templates/
+│   └── index.html        # Web interface
+├── synthetic_wearable_users/  # Sample health data
+├── few_shots/            # AI training examples
+└── requirements-web.txt  # Dependencies
 ```
 
-## License
-```
-Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
-```
+## 🔒 Security
+
+- API keys are never committed to the repository
+- Environment variables used for sensitive data
+- Secure configuration management
+- Input validation and sanitization
+
+## 📈 Health Data
+
+PHIA works with synthetic wearable device data that includes:
+
+- **29 days** of continuous health monitoring
+- **Sleep metrics**: Duration, stages, efficiency
+- **Activity data**: Steps, active minutes, workouts
+- **Heart rate**: Resting HR, variability, zones
+- **Stress indicators**: Management scores, recovery
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+
+## 🙏 Acknowledgments
+
+- Based on research: ["Transforming Wearable Data into Personal Health Insights using Large Language Model Agents"](https://arxiv.org/abs/2406.06464)
+- Google Research for the foundational work
+- Google AI for Gemini API
+- Tavily for search capabilities
+
+## 📞 Support
+
+- 🐛 [Report Issues](https://github.com/hrakashchauhan/phia-health-insights/issues)
+- 💬 [Discussions](https://github.com/hrakashchauhan/phia-health-insights/discussions)
+- 📧 Contact: [your-email@example.com]
+
+---
+
+**⚠️ Disclaimer**: PHIA is for educational and research purposes. Always consult healthcare professionals for medical advice.
