@@ -25,6 +25,7 @@ api_keys.py
 .env
 *.key
 .secrets
+.streamlit/secrets.toml
 
 # IDE
 .vscode/
