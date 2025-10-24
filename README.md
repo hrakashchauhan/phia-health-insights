@@ -1,179 +1,180 @@
 # 🏥 PHIA - Personal Health Insights Agent
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Available-brightgreen)](https://your-app-url.onrender.com)
-[![Python](https://img.shields.io/badge/Python-3.11+-blue)](https://python.org)
-[![Flask](https://img.shields.io/badge/Flask-3.1+-red)](https://flask.palletsprojects.com)
-[![AI](https://img.shields.io/badge/AI-Google%20Gemini-orange)](https://ai.google.dev)
+**Advanced AI-Powered Health Analytics Platform**
 
-**PHIA** is an AI-powered Personal Health Insights Agent that analyzes wearable device data to provide personalized health recommendations and insights.
+PHIA is a comprehensive health platform that combines personal health tracking with advanced AI analytics to provide personalized insights and recommendations.
 
-## 🌟 Features
+## 🚀 **Live Demo**
 
-- **AI-Powered Analysis**: Uses Google's Gemini AI for intelligent health insights
-- **Comprehensive Health Metrics**: Sleep, activity, heart rate, and stress analysis
-- **Interactive Web Interface**: Beautiful, responsive design for all devices
-- **Real-time Chat**: Ask questions about your health data in natural language
-- **Personalized Recommendations**: Evidence-based suggestions for health improvement
-- **Data Visualization**: Clear charts and progress tracking
+**Streamlit Cloud:** [https://phia-health-insights.streamlit.app](https://phia-health-insights.streamlit.app)
 
-## 🚀 Live Demo
+## ✨ **Key Features**
 
-Try PHIA live: **[https://your-app-url.onrender.com](https://your-app-url.onrender.com)**
+### 🤖 **AI Health Analyst**
+- **Google Gemini Integration:** Advanced AI analysis of health patterns
+- **Personalized Insights:** Data-driven recommendations based on your metrics
+- **Pattern Recognition:** Identifies correlations between sleep, activity, stress, and mood
+- **Professional Analysis:** Clinical-grade insights and preventive health strategies
 
-## 📊 What PHIA Analyzes
+### 📊 **Comprehensive Health Tracking**
+- **Multi-Metric Monitoring:** Sleep, steps, heart rate, stress, weight, mood
+- **Trend Analysis:** 7-day vs 30-day comparisons with directional insights
+- **Interactive Dashboards:** Real-time visualization of health data
+- **Goal Tracking:** Set and monitor health objectives
 
-### Sleep Quality
-- Sleep duration and consistency
-- Deep sleep and REM percentages
-- Sleep efficiency metrics
-- Bedtime pattern analysis
+### 🔒 **Secure & Private**
+- **Local Data Storage:** SQLite database for privacy
+- **User Authentication:** Secure login system with password hashing
+- **Personal Dashboards:** Individual user data isolation
 
-### Physical Activity
-- Daily step counts and trends
-- Active zone minutes
-- Workout frequency and intensity
-- Activity pattern recognition
+## 🛠 **Technology Stack**
 
-### Cardiovascular Health
-- Resting heart rate trends
-- Heart rate variability
-- Recovery metrics
-- Cardiovascular fitness indicators
+- **Frontend:** Streamlit with Plotly visualizations
+- **Backend:** Python with SQLite database
+- **AI Engine:** Google Gemini Pro for health analysis
+- **Deployment:** Streamlit Cloud hosting
 
-### Stress & Recovery
-- Stress management scores
-- Recovery recommendations
-- Lifestyle impact analysis
-- Wellness optimization
+## 📱 **Quick Start**
 
-## 🛠️ Installation
+### **Option 1: Use Live Demo**
+Visit [https://phia-health-insights.streamlit.app](https://phia-health-insights.streamlit.app)
 
-### Quick Start (Local Development)
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/hrakashchauhan/phia-health-insights.git
-   cd phia-health-insights
-   ```
-
-2. **Set up environment**
-   ```bash
-   conda create -n phia python=3.11 -y
-   conda activate phia
-   pip install -r requirements-web.txt
-   ```
-
-3. **Configure API keys**
-   ```bash
-   cp .env.example .env
-   # Edit .env and add your API keys
-   ```
-
-4. **Run the application**
-   ```bash
-   python app.py
-   ```
-
-5. **Open in browser**
-   ```
-   http://localhost:5000
-   ```
-
-### API Keys Required
-
-- **Google/Gemini API Key**: Get from [Google AI Studio](https://aistudio.google.com)
-- **Tavily API Key** (optional): Get from [Tavily](https://www.tavily.com/#pricing)
-
-## 🌐 Deployment
-
-### Deploy to Render (Recommended)
-
-1. Fork this repository
-2. Connect to [Render](https://render.com)
-3. Create a new Web Service
-4. Set environment variables:
-   - `GOOGLE_API_KEY`: Your Google/Gemini API key
-   - `TAVILY_API_KEY`: Your Tavily API key (optional)
-5. Deploy!
-
-### Deploy to Heroku
+### **Option 2: Local Installation**
 
 ```bash
-heroku create your-app-name
-heroku config:set GOOGLE_API_KEY=your_key_here
-heroku config:set TAVILY_API_KEY=your_key_here
-git push heroku main
+# Clone repository
+git clone https://github.com/hrakashchauhan/phia-health-insights.git
+cd phia-health-insights
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up environment variables
+cp .env.example .env
+# Add your Google API key to .env file
+
+# Run application
+streamlit run streamlit_app.py
 ```
 
-## 💬 Example Questions
+## 🎯 **How to Use**
 
-Ask PHIA anything about your health data:
+1. **Create Account:** Sign up with username, email, and password
+2. **Log Health Data:** Enter daily metrics (sleep, steps, heart rate, etc.)
+3. **View Dashboard:** Monitor trends and key health indicators
+4. **Ask PHIA:** Get AI-powered insights about your health patterns
 
-- "How can I feel more awake and energetic during the day?"
-- "What's affecting my sleep quality?"
-- "How can I improve my running performance?"
-- "What patterns do you see in my health data?"
-- "How does my exercise routine impact my recovery?"
-- "What's the best time for me to work out?"
+### **Sample Questions for AI:**
+- "How is my sleep quality affecting my stress levels?"
+- "What should I focus on to improve my energy?"
+- "Analyze my cardiovascular fitness trends"
+- "What correlations do you see in my health data?"
 
-## 🏗️ Architecture
+## 🏗 **Architecture**
 
 ```
-PHIA/
-├── app.py                 # Flask web application
-├── config.py             # Configuration management
-├── data_utils.py         # Data processing utilities
-├── phia_agent.py         # AI agent core logic
-├── prompt_templates.py   # AI prompt templates
-├── templates/
-│   └── index.html        # Web interface
-├── synthetic_wearable_users/  # Sample health data
-├── few_shots/            # AI training examples
-└── requirements-web.txt  # Dependencies
+PHIA Platform
+├── User Interface (Streamlit)
+├── Health Data Management (SQLite)
+├── AI Analytics Engine (Gemini)
+├── Visualization Layer (Plotly)
+└── Authentication System
 ```
 
-## 🔒 Security
+## 📈 **Health Metrics Tracked**
 
-- API keys are never committed to the repository
-- Environment variables used for sensitive data
-- Secure configuration management
-- Input validation and sanitization
+| Metric | Range | Purpose |
+|--------|-------|---------|
+| Sleep Hours | 0-12h | Sleep quality analysis |
+| Daily Steps | 0-30k | Activity level monitoring |
+| Heart Rate | 40-120 bpm | Cardiovascular fitness |
+| Stress Score | 0-100 | Mental wellness tracking |
+| Weight | 30-200 kg | Physical health monitoring |
+| Mood | 1-10 | Mental health assessment |
 
-## 📈 Health Data
+## 🔬 **AI Analysis Features**
 
-PHIA works with synthetic wearable device data that includes:
+- **Pattern Recognition:** Identifies trends and correlations
+- **Predictive Insights:** Early warning for health concerns
+- **Personalized Recommendations:** Tailored advice based on data
+- **Comparative Analysis:** Benchmarking against health standards
+- **Risk Assessment:** Proactive health monitoring
 
-- **29 days** of continuous health monitoring
-- **Sleep metrics**: Duration, stages, efficiency
-- **Activity data**: Steps, active minutes, workouts
-- **Heart rate**: Resting HR, variability, zones
-- **Stress indicators**: Management scores, recovery
+## 🚀 **Deployment**
 
-## 🤝 Contributing
+### **Streamlit Cloud**
+- Automatic deployment from GitHub
+- Environment variables configured in Streamlit settings
+- SSL/HTTPS enabled by default
+
+### **Local Development**
+```bash
+# Development server
+streamlit run streamlit_app.py --server.port 8501
+
+# Production server
+streamlit run streamlit_app.py --server.port 80 --server.address 0.0.0.0
+```
+
+## 🔐 **Environment Variables**
+
+```bash
+GOOGLE_API_KEY=your_gemini_api_key_here
+```
+
+## 📊 **Business Model**
+
+PHIA operates on a freemium model with advanced AI features available to all users:
+
+- **Core Features:** Health tracking, basic analytics, AI chat
+- **Premium Features:** Advanced correlations, predictive insights, export capabilities
+- **Enterprise:** HIPAA compliance, team dashboards, API access
+
+## 🛣 **Roadmap**
+
+### **Phase 1: MVP** ✅
+- Basic health tracking
+- AI chat integration
+- User authentication
+- Data visualization
+
+### **Phase 2: Enhanced Analytics** 🚧
+- Advanced pattern recognition
+- Predictive health modeling
+- Integration with wearables
+- Mobile app development
+
+### **Phase 3: Healthcare Integration** 📋
+- HIPAA compliance
+- Healthcare provider integration
+- Clinical decision support
+- Telemedicine features
+
+## 🤝 **Contributing**
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open Pull Request
 
-## 📄 License
+## 📄 **License**
 
-This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 🙏 **Acknowledgments**
 
-- Based on research: ["Transforming Wearable Data into Personal Health Insights using Large Language Model Agents"](https://arxiv.org/abs/2406.06464)
-- Google Research for the foundational work
-- Google AI for Gemini API
-- Tavily for search capabilities
+- Google Gemini AI for advanced health analytics
+- Streamlit for rapid web app development
+- Plotly for interactive visualizations
+- Open source health data standards
 
-## 📞 Support
+## 📞 **Contact**
 
-- 🐛 [Report Issues](https://github.com/hrakashchauhan/phia-health-insights/issues)
-- 💬 [Discussions](https://github.com/hrakashchauhan/phia-health-insights/discussions)
-- 📧 Contact: [your-email@example.com]
+**Project Maintainer:** [Your Name]
+**Email:** [your.email@example.com]
+**GitHub:** [@hrakashchauhan](https://github.com/hrakashchauhan)
 
 ---
 
-**⚠️ Disclaimer**: PHIA is for educational and research purposes. Always consult healthcare professionals for medical advice.
+**Built with ❤️ for better health outcomes through AI-powered insights**
