@@ -13,7 +13,7 @@ import json
 st.set_page_config(page_title="PHIA", page_icon="🏥", layout="wide")
 
 # Configure Gemini AI
-GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', 'AIzaSyBbVQPjHOLxvtjjjjjjjjjjjjjjjjjjjjjjjjj')
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
 
 def init_db():

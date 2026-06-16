@@ -1,180 +1,149 @@
-# 🏥 PHIA - Personal Health Insights Agent
+# PHIA — Personal Health Insights Agent
 
-**Advanced AI-Powered Health Analytics Platform**
+> An LLM agent and Streamlit app that turn wearable-style health data into personalized, data-grounded insights.
 
-PHIA is a comprehensive health platform that combines personal health tracking with advanced AI analytics to provide personalized insights and recommendations.
+PHIA explores how large language models can answer open-ended and numerical questions about personal health and fitness data (sleep, activity, heart rate, stress, and more). The repository combines two complementary pieces:
 
-## 🚀 **Live Demo**
+1. **A ReAct reasoning agent** that answers health questions by writing and executing Python over a user's wearable data and, when needed, searching the web for supporting context. This work is a reproduction/extension of Google Research's PHIA approach to personal health insights with LLM agents, run against synthetic wearable personas.
+2. **An interactive Streamlit app** (with a lightweight Flask demo variant) that lets a user log daily metrics, visualize trends, and chat with an AI health analyst powered by Google Gemini.
 
-**Streamlit Cloud:** [https://phia-health-insights.streamlit.app](https://phia-health-insights.streamlit.app)
-
-## ✨ **Key Features**
-
-### 🤖 **AI Health Analyst**
-- **Google Gemini Integration:** Advanced AI analysis of health patterns
-- **Personalized Insights:** Data-driven recommendations based on your metrics
-- **Pattern Recognition:** Identifies correlations between sleep, activity, stress, and mood
-- **Professional Analysis:** Clinical-grade insights and preventive health strategies
-
-### 📊 **Comprehensive Health Tracking**
-- **Multi-Metric Monitoring:** Sleep, steps, heart rate, stress, weight, mood
-- **Trend Analysis:** 7-day vs 30-day comparisons with directional insights
-- **Interactive Dashboards:** Real-time visualization of health data
-- **Goal Tracking:** Set and monitor health objectives
-
-### 🔒 **Secure & Private**
-- **Local Data Storage:** SQLite database for privacy
-- **User Authentication:** Secure login system with password hashing
-- **Personal Dashboards:** Individual user data isolation
-
-## 🛠 **Technology Stack**
-
-- **Frontend:** Streamlit with Plotly visualizations
-- **Backend:** Python with SQLite database
-- **AI Engine:** Google Gemini Pro for health analysis
-- **Deployment:** Streamlit Cloud hosting
-
-## 📱 **Quick Start**
-
-### **Option 1: Use Live Demo**
-Visit [https://phia-health-insights.streamlit.app](https://phia-health-insights.streamlit.app)
-
-### **Option 2: Local Installation**
-
-```bash
-# Clone repository
-git clone https://github.com/hrakashchauhan/phia-health-insights.git
-cd phia-health-insights
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up environment variables
-cp .env.example .env
-# Add your Google API key to .env file
-
-# Run application
-streamlit run streamlit_app.py
-```
-
-## 🎯 **How to Use**
-
-1. **Create Account:** Sign up with username, email, and password
-2. **Log Health Data:** Enter daily metrics (sleep, steps, heart rate, etc.)
-3. **View Dashboard:** Monitor trends and key health indicators
-4. **Ask PHIA:** Get AI-powered insights about your health patterns
-
-### **Sample Questions for AI:**
-- "How is my sleep quality affecting my stress levels?"
-- "What should I focus on to improve my energy?"
-- "Analyze my cardiovascular fitness trends"
-- "What correlations do you see in my health data?"
-
-## 🏗 **Architecture**
-
-```
-PHIA Platform
-├── User Interface (Streamlit)
-├── Health Data Management (SQLite)
-├── AI Analytics Engine (Gemini)
-├── Visualization Layer (Plotly)
-└── Authentication System
-```
-
-## 📈 **Health Metrics Tracked**
-
-| Metric | Range | Purpose |
-|--------|-------|---------|
-| Sleep Hours | 0-12h | Sleep quality analysis |
-| Daily Steps | 0-30k | Activity level monitoring |
-| Heart Rate | 40-120 bpm | Cardiovascular fitness |
-| Stress Score | 0-100 | Mental wellness tracking |
-| Weight | 30-200 kg | Physical health monitoring |
-| Mood | 1-10 | Mental health assessment |
-
-## 🔬 **AI Analysis Features**
-
-- **Pattern Recognition:** Identifies trends and correlations
-- **Predictive Insights:** Early warning for health concerns
-- **Personalized Recommendations:** Tailored advice based on data
-- **Comparative Analysis:** Benchmarking against health standards
-- **Risk Assessment:** Proactive health monitoring
-
-## 🚀 **Deployment**
-
-### **Streamlit Cloud**
-- Automatic deployment from GitHub
-- Environment variables configured in Streamlit settings
-- SSL/HTTPS enabled by default
-
-### **Local Development**
-```bash
-# Development server
-streamlit run streamlit_app.py --server.port 8501
-
-# Production server
-streamlit run streamlit_app.py --server.port 80 --server.address 0.0.0.0
-```
-
-## 🔐 **Environment Variables**
-
-```bash
-GOOGLE_API_KEY=your_gemini_api_key_here
-```
-
-## 📊 **Business Model**
-
-PHIA operates on a freemium model with advanced AI features available to all users:
-
-- **Core Features:** Health tracking, basic analytics, AI chat
-- **Premium Features:** Advanced correlations, predictive insights, export capabilities
-- **Enterprise:** HIPAA compliance, team dashboards, API access
-
-## 🛣 **Roadmap**
-
-### **Phase 1: MVP** ✅
-- Basic health tracking
-- AI chat integration
-- User authentication
-- Data visualization
-
-### **Phase 2: Enhanced Analytics** 🚧
-- Advanced pattern recognition
-- Predictive health modeling
-- Integration with wearables
-- Mobile app development
-
-### **Phase 3: Healthcare Integration** 📋
-- HIPAA compliance
-- Healthcare provider integration
-- Clinical decision support
-- Telemedicine features
-
-## 🤝 **Contributing**
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
-
-## 📄 **License**
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 **Acknowledgments**
-
-- Google Gemini AI for advanced health analytics
-- Streamlit for rapid web app development
-- Plotly for interactive visualizations
-- Open source health data standards
-
-## 📞 **Contact**
-
-**Project Maintainer:** [Your Name]
-**Email:** [your.email@example.com]
-**GitHub:** [@hrakashchauhan](https://github.com/hrakashchauhan)
+> Note: PHIA is a research and prototyping project. It is **not** a medical device and does not provide medical advice. See [Limitations](#limitations).
 
 ---
 
-**Built with ❤️ for better health outcomes through AI-powered insights**
+## Features
+
+### ReAct health agent (`phia_agent.py`, `run_phia.py`, `run_with_api.py`)
+- **Reason + Act loop** built on the [`onetwo`](https://github.com/google-deepmind/onetwo) ReAct agent, with a bounded number of reasoning steps.
+- **Code-execution tool** that runs generated Python against pandas DataFrames of a persona's summary, activity, and profile data.
+- **Web search tool** via the Tavily API for grounding answers in external health/wellness information (falls back to a mock search when no key is provided).
+- **Few-shot exemplars** authored as Jupyter notebooks in `few_shots/`, parsed into ReAct demonstrations (see `prompt_templates.py` and `few_shots/README.md`).
+- **Synthetic wearable personas** in `synthetic_wearable_users/` used as the data the agent reasons over.
+- **Time-aware data utilities** (`data_utils.py`) including a `ChiaDataFrame` that supports natural-language time filters like "yesterday" or "last 7 days".
+
+### Streamlit health app (`streamlit_app.py`, `mvp_app.py`)
+- **User accounts** with registration/login and hashed passwords, backed by a local SQLite database.
+- **Daily metric logging**: sleep hours, steps, heart rate, stress score, weight, and mood.
+- **Dashboards** with interactive Plotly charts and short-term vs. longer-term trend comparisons.
+- **AI health chat** powered by Google Gemini, answering questions against the user's own logged data.
+- **Goal tracking and correlation analytics** in the fuller MVP variant.
+
+### Flask demo (`app.py`)
+- A minimal, deployable web demo (templated `index.html`) exposing JSON endpoints for a health summary and a keyword-based Q&A, intended as a lightweight hosted entry point.
+
+---
+
+## Tech stack
+
+- **Language:** Python 3.11
+- **Agent / LLM:** `onetwo` (ReAct), Google Gemini (`google-generativeai`), Tavily search (`tavily-python`)
+- **Web / UI:** Streamlit, Plotly (interactive app); Flask + Gunicorn (demo)
+- **Data:** pandas, NumPy, SQLite
+- **Config:** `python-dotenv`
+- **Notebooks:** Jupyter (few-shot exemplars and analysis figures)
+
+Dependency sets are split by entry point:
+
+| File | Use |
+|------|-----|
+| `requirements.txt` | Streamlit app (pinned) |
+| `requirements-mvp.txt` / `requirements-streamlit.txt` | Streamlit app variants |
+| `requirements-web.txt` | Flask demo + full agent stack (onetwo, Tavily, etc.) |
+
+---
+
+## Getting started
+
+### Prerequisites
+- Python 3.11 (`runtime.txt` pins `python-3.11.9`)
+- A Google Gemini API key — https://aistudio.google.com
+- (Agent only) A Tavily API key for web search — https://tavily.com — optional; the agent falls back to mock search without one
+
+### Install
+```bash
+git clone https://github.com/hrakashchauhan/phia-health-insights.git
+cd phia-health-insights
+
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+
+# Pick the requirements file for what you want to run:
+pip install -r requirements.txt          # Streamlit app
+# pip install -r requirements-web.txt    # Flask demo + ReAct agent
+```
+
+### Environment variables
+Copy the example file and fill in your keys:
+```bash
+cp .env.example .env
+```
+```bash
+GOOGLE_API_KEY=your_gemini_api_key_here   # required
+TAVILY_API_KEY=your_tavily_api_key_here   # optional, for the agent's web search
+```
+For Streamlit Cloud, configure the same keys via `.streamlit/secrets.toml` (see `.streamlit/secrets.toml.example`).
+
+### Run the Streamlit app
+```bash
+streamlit run streamlit_app.py
+# then open http://localhost:8501
+```
+
+### Run the Flask demo
+```bash
+python app.py            # local, http://localhost:5000
+# production: gunicorn --bind 0.0.0.0:$PORT app:app   (see render.yaml)
+```
+
+### Run the ReAct agent
+```bash
+python run_phia.py       # prompts for your Gemini (and optional Tavily) keys
+```
+
+---
+
+## Project structure
+
+```
+phia-health-insights/
+├── phia_agent.py            # ReAct agent: code-exec + Tavily search tools
+├── prompt_templates.py      # Agent preamble, ReAct prompt, exemplar builder
+├── data_utils.py            # Data loading + time-aware ChiaDataFrame
+├── run_phia.py              # CLI entry point for the agent
+├── run_with_api.py          # Agent runner with API keys
+│
+├── streamlit_app.py         # Streamlit app (Gemini chat + dashboards)
+├── mvp_app.py               # Fuller MVP (goals, analytics, subscription tiers)
+├── app.py                   # Minimal Flask demo
+├── templates/index.html     # Flask UI template
+│
+├── few_shots/               # Notebook exemplars → ReAct demonstrations
+├── synthetic_wearable_users/# Synthetic persona data the agent reasons over
+├── data/                    # Benchmark questions + evaluation outputs
+├── figs/                    # Analysis notebooks and figure PDFs
+│
+├── requirements*.txt        # Dependency sets per entry point
+├── .env.example             # Environment variable template
+├── render.yaml              # Render deployment config (Flask)
+└── runtime.txt              # Pinned Python version
+```
+
+---
+
+## Limitations
+
+- **Not medical advice.** Outputs are AI-generated and intended for research and prototyping only.
+- **Synthetic data.** The agent reasons over synthetic wearable personas, not real personal data.
+- **API keys required.** Gemini is needed for AI features; Tavily is needed for live web search (otherwise mock search is used).
+- **Prototype storage.** The Streamlit app uses a local SQLite database with SHA-256 password hashing — suitable for demos, not production-grade auth.
+- **Research lineage.** The agent design follows Google Research's PHIA work; this repository is an independent reproduction/extension for learning and experimentation.
+
+---
+
+## License
+
+Released under the MIT License — see [LICENSE](LICENSE).
+
+## Author
+
+**Akash Kumar** — [@hrakashchauhan](https://github.com/hrakashchauhan)
